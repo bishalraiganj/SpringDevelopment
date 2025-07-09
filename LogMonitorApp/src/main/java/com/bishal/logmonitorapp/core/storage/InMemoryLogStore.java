@@ -187,6 +187,12 @@ public class InMemoryLogStore {
 
 	}
 
+	public void clearMemory()
+	{
+		logEntries.clear();
+	}
+
+
 	public LocalDateTime getLastUpdated()
 	{
 		return lastUpdated.get();

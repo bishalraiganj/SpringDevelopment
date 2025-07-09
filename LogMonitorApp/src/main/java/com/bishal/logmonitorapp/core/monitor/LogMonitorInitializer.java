@@ -18,9 +18,16 @@ public class LogMonitorInitializer {
 
 	private final InMemoryLogStore logStore;
 
+	private ConcurrentLogMonitor monitor;
+
 	public LogMonitorInitializer(InMemoryLogStore logStore)
 	{
 		this.logStore = logStore;
+
+		LogConsumer addToMemoryConsumer = (logEntry)->{
+			logStore.add(logEntry);
+		};
+		monitor = new ConcurrentLogMonitor(60,1400,addToMemoryConsumer);
 	}
 
 	@PostConstruct
@@ -42,18 +49,22 @@ public class LogMonitorInitializer {
 		long monitorPollTimeMilli = 1400;
 
 		TemporaryTesting writerToBishalAppLog = new TemporaryTesting();
-		ConcurrentLogMonitor monitor = new ConcurrentLogMonitor(monitorTimeLimitSec,monitorPollTimeMilli,addToMemoryConsumer);
+
 
 		ExecutorService executor = Executors.newCachedThreadPool();
 
 		Runnable writerRunnable = ()->{
-			writerToBishalAppLog.writeToFile(Path.of("BishalAppLogs.txt"), Duration.ofSeconds(120));
+			writerToBishalAppLog.writeToFile(Path.of("BishalAppLogs.txt"), Duration.ofSeconds(360));
 		};
 
 		executor.execute(writerRunnable);
 		monitor.startMonitoring(Path.of("BishalAppLogs.txt"));
 
+	}
 
+	public ConcurrentLogMonitor getMonitor()
+	{
+		return monitor;
 
 	}
 

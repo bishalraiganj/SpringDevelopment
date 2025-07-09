@@ -3,6 +3,7 @@ package com.bishal.logmonitorapp.core.monitor;
 import com.bishal.logmonitorapp.core.consumer.LogConsumer;
 import com.bishal.logmonitorapp.core.model.LogEntry;
 import com.bishal.logmonitorapp.core.parser.LogParser;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -73,8 +74,12 @@ class ProperBlockingTask extends RecursiveTask<ConcurrentHashMap<LogEntry, Time>
 //					if (!runningFlags.containsKey(path)) {
 //						runningFlags.put(path, new AtomicBoolean(true));
 //					}
-					while (runningFlags.get(path).get() && System.currentTimeMillis() - sTime <= timeLimit * 1000L) {
+					while (runningFlags.get(path).get() )
+//						&& System.currentTimeMillis() - sTime <= timeLimit * 1000L) {
+
+					{
 						if (!fileOffsets.containsKey(path)) {
+
 							fileOffsets.put(path, raf.length());
 						}
 						raf.seek(fileOffsets.get(path));
@@ -251,6 +256,7 @@ public class ConcurrentLogMonitor {
 		else {
 
 			runningFlags.get(path).set(false);
+
 		}
 
 	}
