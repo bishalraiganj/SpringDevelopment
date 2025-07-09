@@ -38,7 +38,7 @@ public class LogController {
 		Path monitorFilePath = Path.of(path);
 		logMonitorInitializer.getMonitor().stopMonitoring(monitorFilePath);
 
-		return "Monitoring Stopped for path : " + monitorFilePath.toAbsolutePath();
+		return "Monitoring Stopped for path : " + monitorFilePath.toAbsolutePath() + LocalDateTime.now();
 	}
 
 
