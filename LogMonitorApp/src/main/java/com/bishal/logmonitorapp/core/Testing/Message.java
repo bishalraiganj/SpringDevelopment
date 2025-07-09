@@ -1,4 +1,4 @@
-package com.bishal.logmonitorapp.Testing;
+package com.bishal.logmonitorapp.core.Testing;
 
 public enum Message {
 

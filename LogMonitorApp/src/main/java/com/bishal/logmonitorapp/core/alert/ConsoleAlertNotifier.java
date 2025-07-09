@@ -1,6 +1,8 @@
-package com.bishal.logmonitorapp.alert;
+package com.bishal.logmonitorapp.core.alert;
 
-import com.bishal.logmonitorapp.model.LogEntry;
+import com.bishal.logmonitorapp.core.alert.AlertNotifier;
+import com.bishal.logmonitorapp.core.alert.AlertRule;
+import com.bishal.logmonitorapp.core.model.LogEntry;
 
 import java.util.List;
 

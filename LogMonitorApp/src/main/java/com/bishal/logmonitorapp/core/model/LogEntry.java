@@ -1,4 +1,4 @@
-package com.bishal.logmonitorapp.model;
+package com.bishal.logmonitorapp.core.model;
 
 import java.nio.file.Path;
 import java.time.LocalDateTime;

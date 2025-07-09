@@ -1,4 +1,8 @@
-package com.bishal.logmonitorapp.Testing;
+package com.bishal.logmonitorapp.core.Testing;
+
+import com.bishal.logmonitorapp.core.Testing.Level;
+import com.bishal.logmonitorapp.core.Testing.Message;
+import com.bishal.logmonitorapp.core.Testing.Source;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -12,7 +16,7 @@ import java.util.Random;
 public class TemporaryTesting {
 
 
-	// Write now the logic in writeToFile writes every 1100 ms or 1.1 seconds later
+	// currently the logic in writeToFile writes every 1100 ms or 1.1 seconds later
 
 	public static void writeToFile(Path path , Duration duration)
 	{

@@ -1,7 +1,10 @@
-package com.bishal.logmonitorapp.alert;
+package com.bishal.logmonitorapp.core.alert;
 
-import com.bishal.logmonitorapp.model.LogEntry;
-import com.bishal.logmonitorapp.storage.InMemoryLogStore;
+import com.bishal.logmonitorapp.core.alert.AlertNotifier;
+import com.bishal.logmonitorapp.core.alert.AlertRule;
+import com.bishal.logmonitorapp.core.model.LogEntry;
+import com.bishal.logmonitorapp.core.model.LogEntry;
+import com.bishal.logmonitorapp.core.storage.InMemoryLogStore;
 
 import java.time.Duration;
 import java.util.ArrayList;

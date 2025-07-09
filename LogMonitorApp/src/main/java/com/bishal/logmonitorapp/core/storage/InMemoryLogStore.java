@@ -1,6 +1,7 @@
-package com.bishal.logmonitorapp.storage;
+package com.bishal.logmonitorapp.core.storage;
 
-import com.bishal.logmonitorapp.model.LogEntry;
+import com.bishal.logmonitorapp.core.model.LogEntry;
+import org.springframework.stereotype.Component;
 
 import java.nio.file.Path;
 import java.time.Duration;
@@ -14,6 +15,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 
+
+@Component
 public class InMemoryLogStore {
 
 	private final ConcurrentLinkedQueue<LogEntry> logEntries

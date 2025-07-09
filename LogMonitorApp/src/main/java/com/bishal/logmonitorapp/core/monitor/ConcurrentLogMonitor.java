@@ -1,8 +1,8 @@
-package com.bishal.logmonitorapp.monitor;
+package com.bishal.logmonitorapp.core.monitor;
 
-import com.bishal.logmonitorapp.consumer.LogConsumer;
-import com.bishal.logmonitorapp.model.LogEntry;
-import com.bishal.logmonitorapp.parser.LogParser;
+import com.bishal.logmonitorapp.core.consumer.LogConsumer;
+import com.bishal.logmonitorapp.core.model.LogEntry;
+import com.bishal.logmonitorapp.core.parser.LogParser;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;

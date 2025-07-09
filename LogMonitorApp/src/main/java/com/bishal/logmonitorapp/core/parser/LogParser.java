@@ -1,6 +1,6 @@
-package com.bishal.logmonitorapp.parser;
+package com.bishal.logmonitorapp.core.parser;
 
-import com.bishal.logmonitorapp.model.LogEntry;
+import com.bishal.logmonitorapp.core.model.LogEntry;
 
 import java.nio.file.Path;
 import java.time.LocalDateTime;

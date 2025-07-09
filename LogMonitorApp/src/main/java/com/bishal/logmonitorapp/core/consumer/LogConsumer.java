@@ -1,6 +1,6 @@
-package com.bishal.logmonitorapp.consumer;
+package com.bishal.logmonitorapp.core.consumer;
 
-import com.bishal.logmonitorapp.model.LogEntry;
+import com.bishal.logmonitorapp.core.model.LogEntry;
 
 
 public interface LogConsumer {
