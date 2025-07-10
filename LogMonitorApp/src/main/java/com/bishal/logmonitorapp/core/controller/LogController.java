@@ -57,7 +57,7 @@ public class LogController {
 		cachedThreadPool.execute(syntheticLogWriterRunnable);
 
 
-		System.out.println("Started Synthetic logs writing to : Path: " + "( " + filePath.toAbsolutePath() + ") ");
+		System.out.println("Started Synthetic logs writing to : Path: " + "( " + filePath.toAbsolutePath() + ") " + LocalDateTime.now());
 
 		return "Started writing Synthetic Logs to Path: " + "(" +  filePath.toAbsolutePath() + ")";
 
@@ -72,7 +72,7 @@ public class LogController {
 		ConcurrentLogMonitor monitor = logMonitorInitializer.getMonitor();
 		monitor.startMonitoring(filePath);
 
-		System.out.println("Started Monitoring : Path:  " + "(" + filePath.toAbsolutePath() + ")");
+		System.out.println("Started Monitoring : Path:  " + "(" + filePath.toAbsolutePath() + ")" + LocalDateTime.now());
 
 		return "StartedMonitoring : " + filePath.toAbsolutePath();
 
@@ -85,7 +85,7 @@ public class LogController {
 		Path monitorFilePath = Path.of(path);
 		logMonitorInitializer.getMonitor().stopMonitoring(monitorFilePath);
 
-		System.out.println("Stopped Monitoring : Path: " + "(" + monitorFilePath.toAbsolutePath() + ")");
+		System.out.println("Stopped Monitoring : Path: " + "(" + monitorFilePath.toAbsolutePath() + ")" + LocalDateTime.now());
 
 		return "Monitoring Stopped for path : " + monitorFilePath.toAbsolutePath() + LocalDateTime.now();
 	}
