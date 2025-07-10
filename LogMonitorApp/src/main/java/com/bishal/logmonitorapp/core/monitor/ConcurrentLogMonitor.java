@@ -287,6 +287,18 @@ public class ConcurrentLogMonitor {
 
 	}
 
+	private Map<Path,AtomicBoolean> getFileMonitoringStatusMap()
+	{
+		return new LinkedHashMap<>(runningFlags);
+	}
+
+
+	public boolean getFileMonitoringStatus(Path path)
+	{
+		return runningFlags.get(path).get();
+	}
+
+
 	public Map<String,Boolean> getRunningThreadsStatuses()
 	{
 

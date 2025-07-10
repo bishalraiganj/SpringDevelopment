@@ -6,10 +6,7 @@ import org.springframework.stereotype.Component;
 import java.nio.file.Path;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicLong;
@@ -190,6 +187,35 @@ public class InMemoryLogStore {
 	public void clearMemory()
 	{
 		logEntries.clear();
+	}
+
+
+	public List<LogEntry> filterByPath(Path path)
+	{
+		return new ArrayList<>(groupedByPathMap.get(path));
+	}
+
+
+	public List<LogEntry> filterByLevel(String level)
+	{
+		return new ArrayList<>(groupedByLevelMap.get(level));
+	}
+
+	public List<LogEntry> filterByTimePeriod(LocalDateTime start, LocalDateTime end)
+	{
+		List<LogEntry> filteredList = logEntries.parallelStream()
+				.filter((entry)->{
+					return !entry.timestamp().isBefore(start) && !entry.timestamp().isAfter(end);
+				})
+				.collect(()->new ArrayList<>(),(ArrayList<LogEntry> list,LogEntry entry)->{
+					list.add(entry);
+				},(c,d)->{
+					c.addAll(d);
+				});
+
+		return filteredList;
+
+
 	}
 
 

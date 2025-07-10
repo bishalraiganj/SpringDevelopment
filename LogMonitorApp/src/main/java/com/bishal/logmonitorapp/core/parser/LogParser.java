@@ -28,6 +28,7 @@ public class LogParser {
 		if(matcher.matches())
 		{
 			int year  = Integer.parseInt(matcher.group(2));
+
 			int month = Integer.parseInt(matcher.group(3));
 
 			int day = Integer.parseInt(matcher.group(4));
