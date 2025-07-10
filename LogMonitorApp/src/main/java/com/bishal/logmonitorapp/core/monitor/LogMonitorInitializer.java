@@ -20,6 +20,8 @@ public class LogMonitorInitializer {
 
 	private ConcurrentLogMonitor monitor;
 
+	private TemporaryTesting temporaryTestingLogWriter;
+
 	public LogMonitorInitializer(InMemoryLogStore logStore)
 	{
 		this.logStore = logStore;
@@ -28,44 +30,54 @@ public class LogMonitorInitializer {
 			logStore.add(logEntry);
 		};
 		monitor = new ConcurrentLogMonitor(60,1400,addToMemoryConsumer);
-	}
 
-	@PostConstruct
-	public void init()
-	{
-		System.out.println("Starting background log monitoring... ");
-
-		Path pathToMonitor = Path.of("BishalAppLogs.txt");
-
-
-		LogConsumer addToMemoryConsumer = (logEntry)->{
-			logStore.add(logEntry);
-		};
-
-
-		//My monitor will run at max for 60 seconds
-		int monitorTimeLimitSec = 60;
-		//sleep time in the following is set for 1400 seconds
-		long monitorPollTimeMilli = 1400;
-
-		TemporaryTesting writerToBishalAppLog = new TemporaryTesting();
-
-
-		ExecutorService executor = Executors.newCachedThreadPool();
-
-		Runnable writerRunnable = ()->{
-			writerToBishalAppLog.writeToFile(Path.of("BishalAppLogs.txt"), Duration.ofSeconds(360));
-		};
-
-		executor.execute(writerRunnable);
-		monitor.startMonitoring(Path.of("BishalAppLogs.txt"));
+		temporaryTestingLogWriter = new TemporaryTesting();
 
 	}
+
+	// The following post construct is used to implicitly start testWriting to files and starting monitoring on that file ,
+	// which is now done through restful endpoints in the logController
+//	@PostConstruct
+//	public void init()
+//	{
+//		System.out.println("Starting background log monitoring... ");
+//
+//		Path pathToMonitor = Path.of("BishalAppLogs.txt");
+//
+//
+//		LogConsumer addToMemoryConsumer = (logEntry)->{
+//			logStore.add(logEntry);
+//		};
+//
+//
+//		//My monitor will run at max for 60 seconds
+//		int monitorTimeLimitSec = 60;
+//		//sleep time in the following is set for 1400 seconds
+//		long monitorPollTimeMilli = 1400;
+//
+//		TemporaryTesting writerToBishalAppLog = new TemporaryTesting();
+//
+//
+//		ExecutorService executor = Executors.newCachedThreadPool();
+//
+//		Runnable writerRunnable = ()->{
+//			writerToBishalAppLog.writeToFile(Path.of("BishalAppLogs.txt"), Duration.ofSeconds(360));
+//		};
+//
+//		executor.execute(writerRunnable);
+//		monitor.startMonitoring(Path.of("BishalAppLogs.txt"));
+//
+//	}
 
 	public ConcurrentLogMonitor getMonitor()
 	{
 		return monitor;
 
+	}
+
+	public TemporaryTesting getTemporaryTestingLogWriter()
+	{
+		return temporaryTestingLogWriter;
 	}
 
 

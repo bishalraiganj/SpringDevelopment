@@ -197,6 +197,7 @@ public class ConcurrentLogMonitor {
 	private final ConcurrentHashMap<Path,Long> fileOffsets = new ConcurrentHashMap<>();
 
 
+	private final ConcurrentHashMap<String ,AtomicBoolean  > runningThreadsStatus = new ConcurrentHashMap<>();
 
 	private final ConcurrentHashMap<Path, AtomicBoolean> runningFlags = new ConcurrentHashMap<>();
 
@@ -238,7 +239,7 @@ public class ConcurrentLogMonitor {
 		}
 
 
-		executor.submit(new ProperBlockingTask(timeLimit,fileOffsets,path,sleepTime,runningFlags,consumer) );
+		executor.submit(new ProperBlockingTask(timeLimit,fileOffsets,path,sleepTime,runningFlags,consumer));
 
 
 
