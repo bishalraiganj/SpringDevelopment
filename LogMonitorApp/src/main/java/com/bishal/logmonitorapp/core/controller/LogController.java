@@ -130,6 +130,7 @@ public class LogController {
 
 			List<LogEntry> finalList = memoryLogStore.filterByTimePeriod(start,end);
 
+			System.out.println("Parsing Successful : " + "Filtration requested : ("+ start +" To " + end + ")" + " Found  Logs: " + finalList.size() + LocalDateTime.now() );
 			return finalList;
 
 		}catch(DateTimeParseException e)
