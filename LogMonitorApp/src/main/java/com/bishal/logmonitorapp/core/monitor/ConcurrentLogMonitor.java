@@ -11,6 +11,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Time;
 import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ForkJoinPool;
@@ -42,13 +44,15 @@ class ProperBlockingTask extends RecursiveTask<ConcurrentHashMap<LogEntry, Time>
 
 //	private final ConcurrentHashMap<LogEntry, Time> tempMap;
 
+	private final ConcurrentHashMap<Thread,AtomicBoolean> runningThreadsStatusMap ;
+
 	private final LogConsumer consumer;
 
 	private final ConcurrentHashMap<String, LocalDateTime> processedFailedLogsMap = new ConcurrentHashMap<>();
 
 	private final AtomicLong logTotalCount = new AtomicLong(0L);
 
-	ProperBlockingTask(int timeLimit,ConcurrentHashMap<Path,Long> fileOffsets, Path path ,Long sleepTime, ConcurrentHashMap<Path, AtomicBoolean> runningFlags ,LogConsumer consumer )
+	ProperBlockingTask(int timeLimit,ConcurrentHashMap<Path,Long> fileOffsets, Path path ,Long sleepTime, ConcurrentHashMap<Path, AtomicBoolean> runningFlags ,LogConsumer consumer,ConcurrentHashMap<Thread,AtomicBoolean> runningThreadsStatusMap )
 	{
 		this.timeLimit = timeLimit;
 		this.fileOffsets = fileOffsets;
@@ -57,6 +61,8 @@ class ProperBlockingTask extends RecursiveTask<ConcurrentHashMap<LogEntry, Time>
 		this.runningFlags = runningFlags;
 //		this.tempMap = tempMap;
 		this.consumer = consumer;
+
+		this.runningThreadsStatusMap  = runningThreadsStatusMap;
 	}
 
 	@Override
@@ -78,6 +84,25 @@ class ProperBlockingTask extends RecursiveTask<ConcurrentHashMap<LogEntry, Time>
 //						&& System.currentTimeMillis() - sTime <= timeLimit * 1000L) {
 
 					{
+
+						// This following thread and compute part , map's running threads to the shared object map runningThreadsStatusMap to track threads ,
+						// this map object is shared between all tasks instances created and the ConcurrentLogMonitorInstance Object
+						Thread currentThread = Thread.currentThread();
+						runningThreadsStatusMap.compute(currentThread,(existingThread,existingBoolean)->{
+
+							if(existingBoolean == null)
+							{
+								AtomicBoolean aBoolean = new AtomicBoolean(true);
+								return aBoolean;
+
+							}
+							existingBoolean.getAndSet(true);
+							return existingBoolean;
+
+
+						});
+
+
 						if (!fileOffsets.containsKey(path)) {
 
 							fileOffsets.put(path, raf.length());
@@ -197,7 +222,7 @@ public class ConcurrentLogMonitor {
 	private final ConcurrentHashMap<Path,Long> fileOffsets = new ConcurrentHashMap<>();
 
 
-	private final ConcurrentHashMap<String ,AtomicBoolean  > runningThreadsStatus = new ConcurrentHashMap<>();
+	private final ConcurrentHashMap<Thread ,AtomicBoolean  > runningThreadsStatusMap = new ConcurrentHashMap<>();
 
 	private final ConcurrentHashMap<Path, AtomicBoolean> runningFlags = new ConcurrentHashMap<>();
 
@@ -239,7 +264,7 @@ public class ConcurrentLogMonitor {
 		}
 
 
-		executor.submit(new ProperBlockingTask(timeLimit,fileOffsets,path,sleepTime,runningFlags,consumer));
+		executor.submit(new ProperBlockingTask(timeLimit,fileOffsets,path,sleepTime,runningFlags,consumer,runningThreadsStatusMap));
 
 
 
@@ -261,6 +286,29 @@ public class ConcurrentLogMonitor {
 		}
 
 	}
+
+	public Map<String,Boolean> getRunningThreadsStatuses()
+	{
+
+
+		Map<String,Boolean> threadStatusMap   =
+
+
+				runningThreadsStatusMap.entrySet()
+				.parallelStream()
+				.collect(()->new LinkedHashMap<>(),
+						(LinkedHashMap<String,Boolean> existingMap,Map.Entry<Thread,AtomicBoolean> entry)->{
+
+							existingMap.put(entry.getKey().getName(),entry.getValue().get());
+
+							},
+						(c,d)->{
+					c.putAll(d);
+						});
+
+					return threadStatusMap;
+
+	};
 
 
 

@@ -12,6 +12,7 @@ import java.nio.file.Path;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -75,9 +76,6 @@ public class LogController {
 
 		return "StartedMonitoring : " + filePath.toAbsolutePath();
 
-
-
-
 	}
 
 
@@ -103,8 +101,16 @@ public class LogController {
 
 
 
+	@GetMapping("/monitoringThreadsStatus")
+	public Map<String,Boolean> getMonitoringThreadStatuses()
+	{
+		ConcurrentLogMonitor monitor = logMonitorInitializer.getMonitor();
 
+		Map<String,Boolean> statuses = monitor.getRunningThreadsStatuses();
+		System.out.println("MonitoringThreadsStatus Fetched : Status : " + statuses + "\n\n\n");
+		return statuses;
 
+	}
 //	@GetMapping("/hello")
 //	public String hello()
 //	{
