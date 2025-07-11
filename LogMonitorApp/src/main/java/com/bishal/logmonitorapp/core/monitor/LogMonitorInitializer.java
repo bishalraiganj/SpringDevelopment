@@ -31,7 +31,7 @@ public class LogMonitorInitializer {
 		LogConsumer addToMemoryConsumer = (logEntry)->{
 			logStore.add(logEntry);
 		};
-		monitor = new ConcurrentLogMonitor(60,1400,addToMemoryConsumer);
+		monitor = new ConcurrentLogMonitor(60,2,addToMemoryConsumer);
 
 		temporaryTestingLogWriter = new TemporaryTesting();
 
