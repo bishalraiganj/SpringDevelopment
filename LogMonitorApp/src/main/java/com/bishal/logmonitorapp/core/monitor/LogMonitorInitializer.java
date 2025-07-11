@@ -5,6 +5,7 @@ import com.bishal.logmonitorapp.core.Testing.TemporaryTesting;
 import com.bishal.logmonitorapp.core.consumer.LogConsumer;
 import com.bishal.logmonitorapp.core.storage.InMemoryLogStore;
 import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.nio.file.Path;
@@ -22,6 +23,7 @@ public class LogMonitorInitializer {
 
 	private TemporaryTesting temporaryTestingLogWriter;
 
+	@Autowired
 	public LogMonitorInitializer(InMemoryLogStore logStore)
 	{
 		this.logStore = logStore;

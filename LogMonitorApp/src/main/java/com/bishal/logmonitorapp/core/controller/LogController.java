@@ -1,6 +1,7 @@
 package com.bishal.logmonitorapp.core.controller;
 
 import com.bishal.logmonitorapp.core.Testing.TemporaryTesting;
+import com.bishal.logmonitorapp.core.alert.*;
 import com.bishal.logmonitorapp.core.model.LogEntry;
 import com.bishal.logmonitorapp.core.monitor.ConcurrentLogMonitor;
 import com.bishal.logmonitorapp.core.monitor.LogMonitorInitializer;
@@ -29,21 +30,57 @@ public class LogController {
 
 	private final LogMonitorInitializer logMonitorInitializer;
 
+	private final AlertEngine alertEngine;
+
 	private final ExecutorService cachedThreadPool;
 
 	@Autowired
-	public LogController(InMemoryLogStore logStore,LogMonitorInitializer logMonitorInitializer)
+	public LogController(InMemoryLogStore logStore,LogMonitorInitializer logMonitorInitializer,AlertEngine alertEngine)
 	{
 		this.logStore = logStore;
 		this.logMonitorInitializer = logMonitorInitializer;
+		this.alertEngine = alertEngine;
 		cachedThreadPool = Executors.newCachedThreadPool();
 	}
+
 
 
 	@GetMapping("/getAll")
 	public List<LogEntry> getAll()
 	{
 		return logStore.getAll();
+	}
+
+
+	@GetMapping("/evaluateAlerts")
+	public String evaluateAlerts(@RequestParam String threshold,@RequestParam String duration)
+	{
+		try {
+			int thresholdCount = Integer.parseInt(threshold.trim());
+
+			int durationCount = Integer.parseInt(duration.trim());
+
+			Duration interval = Duration.ofSeconds(durationCount);
+
+			SpikeInSevereRule rule = new SpikeInSevereRule(thresholdCount, interval);
+
+
+			AlertNotifier javaFxPopupNotifier = new JavaFXPopupAlertNotifier();
+
+
+			alertEngine.registerRule(rule, javaFxPopupNotifier);
+
+			alertEngine.evaluateAlerts();
+			System.out.println(" Alert Evaluation started :  AlertMap : " + alertEngine.getAlertNotifierMap() + " \n\n " + LocalDateTime.now());
+
+			return " Alert Evaluation started :  AlertMap : " + alertEngine.getAlertNotifierMap() + " \n\n " + LocalDateTime.now();
+
+		}catch(NumberFormatException nfe)
+		{
+			System.out.println("Evaluation failed , since number parsing failed for threshold and duration ");
+		}
+
+		return "Evaluation Failed , since parsing failed for threshold and duration";
 	}
 
 	@GetMapping("/startTestWritingToFile")
@@ -195,6 +232,14 @@ public class LogController {
 
 
 
+	@GetMapping("/getRecent")
+	public List<LogEntry> getRecent(@RequestParam String timeUnit)
+	{
+		Duration duration = Duration.ofSeconds(Long.parseLong(timeUnit));
+
+
+	return	logStore.getRecent(duration);
+	}
 
 
 	@GetMapping("/getFileMonitoringStatus")

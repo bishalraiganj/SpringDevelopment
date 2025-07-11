@@ -23,10 +23,17 @@ public interface AlertRule {
 
 	/* Gets the window for which the logs should be evaluated */
 
+	int getThreshold();
+
+
 	Duration getWindow();
 
 	/* A human-readable explanation of the rule */
 
 	String getDescription();
 
+
+	void setThreshold(int threshold);
+
+	void setWindow(Duration window);
 }

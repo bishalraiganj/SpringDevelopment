@@ -9,9 +9,9 @@ import java.util.List;
 public class SpikeInSevereRule implements AlertRule {
 
 
-	private final int threshold;
+	private int threshold;
 
-	private final Duration window;
+	private  Duration window;
 
 
 
@@ -20,6 +20,7 @@ public class SpikeInSevereRule implements AlertRule {
 		this.threshold = threshold;
 		this.window = window;
 	}
+
 
 
 	@Override
@@ -34,10 +35,29 @@ public class SpikeInSevereRule implements AlertRule {
 
 				})
 				.count();
+		System.out.println(" \n Count : " +count);
 		return count >= threshold;
+
 
 	}
 
+	@Override
+	public int getThreshold()
+	{
+		return threshold;
+	}
+
+	@Override
+	public void setThreshold(int threshold)
+	{
+		this.threshold = threshold;
+	}
+
+	@Override
+	public void setWindow(Duration window)
+	{
+		this.window = window;
+	}
 	@Override
 	public String getLogLevel()
 	{
@@ -66,6 +86,22 @@ public class SpikeInSevereRule implements AlertRule {
 	}
 
 
+	@Override
+	public boolean equals(Object o)
+	{
+		if (this.getClass().getSimpleName().equals(o.getClass().getSimpleName())) {
+			return true;
+		}
+		else
+			return false;
+	}
+
+
+	@Override
+	public int hashCode()
+	{
+		return this.getClass().getSimpleName().hashCode();
+	}
 
 
 }

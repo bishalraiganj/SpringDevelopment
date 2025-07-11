@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -93,20 +94,29 @@ public class InMemoryLogStore {
 		return new ArrayList<>(logEntries);
 	}
 
+
+
 	public long totalCount()
 	{
 		return totalCount.get();
 	}
+
+
 
 	public HashMap<Path,ConcurrentLinkedQueue<LogEntry>> getPathMap()
 	{
 		return new HashMap<>(groupedByPathMap);
 	}
 
+
+
 	public HashMap<String,ConcurrentLinkedQueue<LogEntry>> getLevelMap()
 	{
 		return new HashMap<>(groupedByLevelMap);
 	}
+
+
+
 
 	public List<LogEntry> getByLevel(String level)
 	{
@@ -124,6 +134,9 @@ public class InMemoryLogStore {
 
 	}
 
+
+
+
 	public List<LogEntry> getByFile(Path path)
 	{
 		List<LogEntry> filteredList = logEntries.parallelStream()
@@ -137,6 +150,10 @@ public class InMemoryLogStore {
 		return filteredList;
 
 	}
+
+
+
+
 
 	public List<LogEntry> getRecent(Duration duration)
 	{
@@ -161,6 +178,8 @@ public class InMemoryLogStore {
 
 		if(logEntries.isEmpty())
 		{
+			System.out.println("\n GetRecent() invoked : emptyList returned (no elements in logEntries queue ! \n ");
+
 			return Collections.emptyList();
 		}
 
@@ -170,15 +189,31 @@ public class InMemoryLogStore {
 		LocalDateTime startTime = endTime.minus(duration);
 
 
-		System.out.println("Start time: " + startTime + " End time: " + endTime);
+		System.out.println("-".repeat(100));
+		System.out.println("LogEntries queue size: ("+ logEntries.size() + ")"+ " Start time: " + startTime + " End time: " + endTime);
+
+		AtomicInteger falseCount = new AtomicInteger(0);
 		List<LogEntry> filteredList = logEntries.parallelStream()
 				.filter((entry)->{
-					return !entry.timestamp().isBefore(startTime) && entry.timestamp().isBefore(endTime);
+
+					boolean status = (!entry.timestamp().isBefore(startTime)) && entry.timestamp().isBefore(endTime);
+					if(status == false)
+					{
+						 falseCount.incrementAndGet();
+
+					}
+
+					return status;
 				})
+//				.peek((entry)->{
+//					System.out.println(entry.timestamp());
+//				})
 				.collect(()->new ArrayList<>(),(ArrayList<LogEntry> list, LogEntry entry)->list.add(entry),
 						(a,b)->{
 					a.addAll(b);
 						});
+		System.out.println("False Count: " + falseCount.get());
+		System.out.println("-".repeat(100));
 
 		return filteredList;
 
@@ -196,10 +231,16 @@ public class InMemoryLogStore {
 	}
 
 
+
+
+
 	public List<LogEntry> filterByLevel(String level)
 	{
 		return new ArrayList<>(groupedByLevelMap.get(level));
 	}
+
+
+
 
 	public List<LogEntry> filterByTimePeriod(LocalDateTime start, LocalDateTime end)
 	{
@@ -217,6 +258,9 @@ public class InMemoryLogStore {
 
 
 	}
+
+
+
 
 
 	public LocalDateTime getLastUpdated()

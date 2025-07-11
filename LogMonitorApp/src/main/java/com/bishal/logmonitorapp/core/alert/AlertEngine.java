@@ -5,14 +5,17 @@ import com.bishal.logmonitorapp.core.alert.AlertRule;
 import com.bishal.logmonitorapp.core.model.LogEntry;
 import com.bishal.logmonitorapp.core.model.LogEntry;
 import com.bishal.logmonitorapp.core.storage.InMemoryLogStore;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
-
+@Component
 public class AlertEngine {
 
 
@@ -23,12 +26,20 @@ public class AlertEngine {
 			= new ConcurrentHashMap<>();
 
 
+	@Autowired
 	public AlertEngine(InMemoryLogStore store)
 	{
 		this.store = store;
 	}
 
 	//Register's rule with a single notifier
+
+	public Map<AlertRule,ConcurrentLinkedQueue<AlertNotifier>> getAlertNotifierMap()
+	{
+		return new LinkedHashMap<>(ruleNotifierMap);
+	}
+
+
 
 	public void registerRule(AlertRule rule, AlertNotifier notifier)
 	{
@@ -40,7 +51,11 @@ public class AlertEngine {
 				queue.offer(notifier);
 				return queue;
 			}
-			existingValue.offer(notifier);
+
+			if(!existingValue.contains(notifier)) {
+				existingValue.offer(notifier);
+			}
+
 			return existingValue;
 		});
 
@@ -100,6 +115,7 @@ public class AlertEngine {
 				{
 
 					notifier.notify(rule,list);
+					System.out.println(" \n\n  Notified By : " + notifier.toString() + "\n\n");
 
 				}
 
