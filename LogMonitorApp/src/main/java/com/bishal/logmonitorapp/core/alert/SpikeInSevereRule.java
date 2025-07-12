@@ -94,11 +94,13 @@ public class SpikeInSevereRule implements AlertRule {
 			SpikeInSevereRule other = (SpikeInSevereRule) o;
 			if(this.threshold != other.getThreshold())
 			{
-				this.threshold = other.getThreshold();
+				other.threshold = this.getThreshold();
+				System.out.println("Threshold value changed from  " + threshold +  " to " + other.getThreshold() + "Due to existing rule , threshold modified in existing rule");
 			}
 			if(this.window != other.getWindow())
 			{
-				this.window = other.getWindow();
+				other.window = this.getWindow();
+				System.out.println("Window value changed from " + window + " to " + other.getWindow() + "Due to existing rule,  window modified in existing rule");
 			}
 			return true;
 		}
