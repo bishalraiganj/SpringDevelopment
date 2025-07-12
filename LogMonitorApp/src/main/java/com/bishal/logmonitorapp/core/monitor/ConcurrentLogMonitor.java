@@ -152,6 +152,12 @@ class ProperBlockingTask extends RecursiveTask<ConcurrentHashMap<LogEntry, Time>
 
 					}
 
+					//when control flow of execution comes here , it means the corresponding thread running this task was flagged to stop
+					// or triggered by the timer to stop (time out value crossed ) so we must set the AtomicBoolean of the corresponding thread to false
+					//in runningThreadsStatusMap
+
+					runningThreadsStatusMap.get(Thread.currentThread()).set(false);
+
 					System.out.println(Thread.currentThread().getName() + " finished execution !  in " + ( System.currentTimeMillis() - sTime )/1000 + " seconds  | Monitored : " + logTotalCount.get()  + " Lines " );
 
 				} catch (IOException | InterruptedException e) {
@@ -250,7 +256,16 @@ public class ConcurrentLogMonitor {
 	public void startMonitoring(Path path)
 	{
 
-		runningFlags.putIfAbsent(path,new AtomicBoolean(true));
+		runningFlags.compute(path,(existingPath,existingValue)->{
+			if( existingValue == null)
+			{
+
+				return new AtomicBoolean(true);
+			}
+
+			existingValue.getAndSet(true);
+			return existingValue;
+		});
 		if(!Files.exists(path) || !Files.isRegularFile(path))
 		{
 //			try {
@@ -281,6 +296,7 @@ public class ConcurrentLogMonitor {
 		}
 		else {
 
+			System.out.println("Stopped Monitoring : Path: " + "(" +path.toAbsolutePath() + ")" + LocalDateTime.now());
 			runningFlags.get(path).set(false);
 
 		}

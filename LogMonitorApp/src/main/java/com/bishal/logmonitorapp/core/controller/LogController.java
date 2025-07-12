@@ -9,6 +9,7 @@ import com.bishal.logmonitorapp.core.storage.InMemoryLogStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.*;
 import java.nio.file.Path;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -127,7 +128,7 @@ public class LogController {
 		Path monitorFilePath = Path.of(path);
 		logMonitorInitializer.getMonitor().stopMonitoring(monitorFilePath);
 
-		System.out.println("Stopped Monitoring : Path: " + "(" + monitorFilePath.toAbsolutePath() + ")" + LocalDateTime.now());
+
 
 		return "Monitoring Stopped for path : " + monitorFilePath.toAbsolutePath() + LocalDateTime.now();
 	}
@@ -264,6 +265,8 @@ public class LogController {
 		return statuses;
 
 	}
+
+
 //	@GetMapping("/hello")
 //	public String hello()
 //	{

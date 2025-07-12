@@ -90,6 +90,16 @@ public class SpikeInSevereRule implements AlertRule {
 	public boolean equals(Object o)
 	{
 		if (this.getClass().getSimpleName().equals(o.getClass().getSimpleName())) {
+
+			SpikeInSevereRule other = (SpikeInSevereRule) o;
+			if(this.threshold != other.getThreshold())
+			{
+				this.threshold = other.getThreshold();
+			}
+			if(this.window != other.getWindow())
+			{
+				this.window = other.getWindow();
+			}
 			return true;
 		}
 		else

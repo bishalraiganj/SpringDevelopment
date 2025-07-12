@@ -37,7 +37,7 @@ public class JavaFXPopupAlertNotifier implements AlertNotifier {
 	{
 
 //		return o instanceof JavaFXPopupAlertNotifier;
-		if( this.getClass().getSimpleName().equals(o.getClass().getSimpleName()))
+		if( this.getClass().getSimpleName().equals(o.getClass().getSimpleName()) )
 		{
 			return true;
 		}
