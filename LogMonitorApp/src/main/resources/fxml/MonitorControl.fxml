@@ -15,7 +15,7 @@
 
     <TableView fx:id="monitorStatusTable" prefHeight="500">
         <columns>
-            <TableColumn fx:id="filePathColumn" text="File Path"/>
+            <TableColumn fx:id="filePathColumn" text="Thread Pool"/>
             <TableColumn fx:id="statusColumn" text="Running?"/>
         </columns>
     </TableView>
