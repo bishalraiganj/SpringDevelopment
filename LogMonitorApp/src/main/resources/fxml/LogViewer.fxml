@@ -35,7 +35,15 @@
     </top>
 
     <center>
-        <TableView fx:id="logTable" prefHeight="600"/>
+        <TableView fx:id="logTable" prefHeight="600">
+            <columns>
+                <TableColumn fx:id="timeColumn" text="Timestamp"/>
+                <TableColumn fx:id="levelColumn" text="Level"/>
+                <TableColumn fx:id="sourceColumn" text="Source"/>
+                <TableColumn fx:id="messageColumn" text="Message"/>
+                <TableColumn fx:id="fileColumn" text="File" prefWidth="500"/>
+            </columns>
+        </TableView>
     </center>
     <bottom>
         <fx:include source="FooterPane.fxml"/>

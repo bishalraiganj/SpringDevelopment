@@ -6,9 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
-
+import java.nio.file.Path;
 import java.util.List;
 
 public class LogViewerController {
@@ -38,10 +36,31 @@ public class LogViewerController {
 		messageCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().message()));
 
 		TableColumn<LogEntry, String> filePathCol = new TableColumn<>("File Path");
-		filePathCol.setCellValueFactory(cell -> new SimpleStringProperty(
-				cell.getValue().filePath() != null ? cell.getValue().filePath().toString() : "N/A"
-		));
+		filePathCol.setPrefWidth(1000);
+		filePathCol.setCellValueFactory(cell -> {
+			Path path = cell.getValue().filePath();
+			return new SimpleStringProperty(path != null ? path.toString() : "N/A");
+		});
 
+		// Tooltip support for long paths
+		filePathCol.setCellFactory(col -> new TableCell<>() {
+			private final Tooltip tooltip = new Tooltip();
+			@Override
+			protected void updateItem(String item, boolean empty) {
+				super.updateItem(item, empty);
+				if (empty || item == null) {
+					setText(null);
+					setTooltip(null);
+				} else {
+					setText(item);
+					tooltip.setText(item);
+					setTooltip(tooltip);
+				}
+			}
+		});
+
+		// Clear existing and add all consistently defined columns
+		logTable.getColumns().clear();
 		logTable.getColumns().addAll(timestampCol, levelCol, sourceCol, messageCol, filePathCol);
 	}
 

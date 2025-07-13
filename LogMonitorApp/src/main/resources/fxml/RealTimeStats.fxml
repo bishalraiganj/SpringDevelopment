@@ -31,7 +31,7 @@
             <TableColumn fx:id="levelColumn" text="Level"/>
             <TableColumn fx:id="sourceColumn" text="Source"/>
             <TableColumn fx:id="messageColumn" text="Message"/>
-            <TableColumn fx:id="fileColumn" text="File"/>
+            <TableColumn fx:id="fileColumn" text="File" prefWidth="500"/>
         </columns>
     </TableView>
     <fx:include source="FooterPane.fxml" />
