@@ -2,17 +2,24 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.bishal.logmonitorapp.ui.AlertManagerController"
-      spacing="12" style="-fx-padding: 20;">
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.bishal.logmonitorapp.ui.AlertManagerController">
 
-    <Label text="Evaluate Alert Rule (Severe Log Spike)"/>
-    <HBox spacing="10">
-        <TextField fx:id="thresholdField" promptText="Threshold (e.g., 5)" />
-        <TextField fx:id="durationField" promptText="Duration (seconds)" />
-        <Button text="Evaluate" onAction="#evaluateAlerts"/>
-    </HBox>
-    <Label fx:id="alertStatusLabel" text="No evaluation yet."/>
-    <fx:include source="FooterPane.fxml" />
-</VBox>
+    <center>
+        <VBox spacing="12" style="-fx-padding: 20;">
+            <Label text="Evaluate Alert Rule (Severe Log Spike)"/>
+            <HBox spacing="10">
+                <TextField fx:id="thresholdField" promptText="Threshold (e.g., 5)" />
+                <TextField fx:id="durationField" promptText="Duration (seconds)" />
+                <Button text="Evaluate" onAction="#evaluateAlerts"/>
+            </HBox>
+            <Label fx:id="alertStatusLabel" text="No evaluation yet."/>
+        </VBox>
+    </center>
+
+    <bottom>
+        <Label text="© Bishal Adhikary | Bishal Technologies | Advanced Log Monitoring System"
+               style="-fx-padding: 10; -fx-font-size: 11px; -fx-text-fill: gray;"/>
+    </bottom>
+</BorderPane>
