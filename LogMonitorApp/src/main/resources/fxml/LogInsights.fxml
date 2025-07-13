@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.bishal.logmonitorapp.ui.LogInsightsController">
+
+    <center>
+        <ScrollPane fitToWidth="true">
+            <Accordion fx:id="accordion" style="-fx-padding: 20;" />
+        </ScrollPane>
+    </center>
+</BorderPane>

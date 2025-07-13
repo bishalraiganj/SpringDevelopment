@@ -22,33 +22,43 @@ public class MainDashboardController {
 		}
 	}
 
+	@FXML
 	public void openLogViewer() {
 		loadFXML("LogViewer.fxml");
 	}
 
+	@FXML
 	public void openMonitorControl() {
 		loadFXML("MonitorControl.fxml");
 	}
 
+	@FXML
 	public void openAlerts() {
 		loadFXML("AlertManager.fxml");
 	}
 
+	@FXML
 	public void openSyntheticWriter() {
 		loadFXML("SyntheticWriter.fxml");
 	}
 
+	@FXML
 	public void openSystemActions() {
 		loadFXML("SystemActions.fxml");
 	}
 
+	@FXML
 	public void openStats() {
 		loadFXML("RealTimeStats.fxml");
 	}
+
 	@FXML
-	private void openThreadStatus() throws IOException {
-		Node content = FXMLLoader.load(getClass().getResource("/fxml/ThreadStatusView.fxml"));
-		contentPane.getChildren().setAll(content);
+	public void openThreadStatus() {
+		loadFXML("ThreadStatusView.fxml");
 	}
 
+	@FXML
+	public void openLogInsights() {
+		loadFXML("LogInsights.fxml");
+	}
 }
