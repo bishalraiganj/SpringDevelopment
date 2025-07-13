@@ -18,7 +18,7 @@
     </center>
 
     <bottom>
-        <Label text="© Bishal Adhikary | Bishal Technologies | Advanced Log Monitoring System"
+        <Label text="© Bishal Adhikary | AdhikaryX Systems | Advanced Log Monitoring System"
                style="-fx-padding: 10; -fx-font-size: 11px; -fx-text-fill: gray;"/>
     </bottom>
 </BorderPane>
