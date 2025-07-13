@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.bishal.logmonitorapp.ui.SystemActionsController"
+      spacing="14" style="-fx-padding: 20;">
+
+    <Label text="Clear In-Memory Logs &amp; View Recent Logs"/>
+
+    <HBox spacing="10">
+        <Button text="Clear Memory" onAction="#clearMemory"/>
+        <Label fx:id="memoryStatusLabel" text="No action performed."/>
+    </HBox>
+
+    <HBox spacing="10">
+        <TextField fx:id="durationField" promptText="Duration in seconds (e.g., 30)" />
+        <Button text="Load Recent Logs" onAction="#loadRecentLogs"/>
+    </HBox>
+
+    <TableView fx:id="recentTable" prefHeight="400">
+        <columns>
+            <TableColumn fx:id="timeColumn" text="Timestamp"/>
+            <TableColumn fx:id="levelColumn" text="Level"/>
+            <TableColumn fx:id="sourceColumn" text="Source"/>
+            <TableColumn fx:id="messageColumn" text="Message"/>
+            <TableColumn fx:id="fileColumn" text="File"/>
+        </columns>
+    </TableView>
+
+</VBox>

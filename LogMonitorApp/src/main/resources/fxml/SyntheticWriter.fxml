@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.bishal.logmonitorapp.ui.SyntheticWriterController"
+      spacing="10" style="-fx-padding: 20;">
+
+    <Label text="Start Synthetic Log Writer"/>
+    <HBox spacing="10">
+        <TextField fx:id="filePathField" promptText="File path (e.g., logs/test.log)" />
+        <Button text="Start Writing" onAction="#startSyntheticWriting"/>
+    </HBox>
+    <Label fx:id="writerStatusLabel" text="Status: not started yet."/>
+</VBox>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.bishal.logmonitorapp.ui.LogViewerController" prefWidth="1000" prefHeight="700">
+
+    <top>
+        <VBox spacing="8" style="-fx-padding: 10;">
+            <HBox spacing="8">
+                <Label text="Path:"/>
+                <TextField fx:id="pathField" promptText="path/to/log.txt" />
+                <Button text="Filter by Path" onAction="#filterByPath"/>
+
+                <Label text="Level:"/>
+                <TextField fx:id="levelField" promptText="INFO/WARN/ERROR" />
+                <Button text="Filter by Level" onAction="#filterByLevel"/>
+            </HBox>
+
+            <HBox spacing="8">
+                <Label text="Start:"/>
+                <TextField fx:id="startTimeField" promptText="yyyy-MM-dd HH:mm:ss"/>
+                <Label text="End:"/>
+                <TextField fx:id="endTimeField" promptText="yyyy-MM-dd HH:mm:ss"/>
+                <Button text="Filter by Time" onAction="#filterByTimePeriod"/>
+
+                <Label text="Recent (sec):"/>
+                <TextField fx:id="recentDurationField" promptText="60"/>
+                <Button text="Recent" onAction="#filterByRecent"/>
+                <Button text="All Logs" onAction="#loadAllLogs"/>
+            </HBox>
+
+            <Label fx:id="statusLabel" text="Ready" style="-fx-text-fill: green;"/>
+        </VBox>
+    </top>
+
+    <center>
+        <TableView fx:id="logTable" prefHeight="600"/>
+    </center>
+</BorderPane>

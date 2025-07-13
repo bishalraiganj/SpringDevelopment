@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.bishal.logmonitorapp.ui.RealTimeStatsController"
+      spacing="14" style="-fx-padding: 20;">
+
+    <Label text="Real-Time Log Filters &amp; Stats"/>
+
+    <HBox spacing="8">
+        <TextField fx:id="pathField" promptText="Filter by path..." />
+        <Button text="Filter" onAction="#filterByPath"/>
+    </HBox>
+
+    <HBox spacing="8">
+        <TextField fx:id="levelField" promptText="Filter by level (e.g., INFO, SEVERE)" />
+        <Button text="Filter" onAction="#filterByLevel"/>
+    </HBox>
+
+    <HBox spacing="8">
+        <TextField fx:id="startField" promptText="Start time (e.g., 2025-07-12T00:00:00)" />
+        <TextField fx:id="endField" promptText="End time (e.g., 2025-07-12T23:59:59)" />
+        <Button text="Filter" onAction="#filterByTimeRange"/>
+    </HBox>
+
+    <TableView fx:id="resultTable" prefHeight="400">
+        <columns>
+            <TableColumn fx:id="timeColumn" text="Timestamp"/>
+            <TableColumn fx:id="levelColumn" text="Level"/>
+            <TableColumn fx:id="sourceColumn" text="Source"/>
+            <TableColumn fx:id="messageColumn" text="Message"/>
+            <TableColumn fx:id="fileColumn" text="File"/>
+        </columns>
+    </TableView>
+
+</VBox>

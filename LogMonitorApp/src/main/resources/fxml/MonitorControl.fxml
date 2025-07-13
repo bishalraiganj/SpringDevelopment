@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.bishal.logmonitorapp.ui.MonitorControlController" spacing="12" style="-fx-padding: 20;">
+
+    <HBox spacing="10">
+        <TextField fx:id="pathField" promptText="Enter log file path..." prefWidth="400"/>
+        <Button text="Start Monitoring" onAction="#startMonitoring"/>
+        <Button text="Stop Monitoring" onAction="#stopMonitoring"/>
+    </HBox>
+
+    <Label fx:id="statusLabel" text="Monitoring Status"/>
+
+    <TableView fx:id="monitorStatusTable" prefHeight="500">
+        <columns>
+            <TableColumn fx:id="filePathColumn" text="File Path"/>
+            <TableColumn fx:id="statusColumn" text="Running?"/>
+        </columns>
+    </TableView>
+</VBox>
