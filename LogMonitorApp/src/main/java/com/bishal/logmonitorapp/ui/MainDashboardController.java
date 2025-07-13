@@ -2,6 +2,7 @@ package com.bishal.logmonitorapp.ui;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.StackPane;
 
@@ -44,4 +45,10 @@ public class MainDashboardController {
 	public void openStats() {
 		loadFXML("RealTimeStats.fxml");
 	}
+	@FXML
+	private void openThreadStatus() throws IOException {
+		Node content = FXMLLoader.load(getClass().getResource("/fxml/ThreadStatusView.fxml"));
+		contentPane.getChildren().setAll(content);
+	}
+
 }

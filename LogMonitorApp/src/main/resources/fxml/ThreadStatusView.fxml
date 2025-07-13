@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.bishal.logmonitorapp.ui.ThreadStatusController">
+
+    <center>
+        <TableView fx:id="threadStatusTable" prefHeight="600" prefWidth="1000">
+            <columns>
+                <TableColumn fx:id="filePathColumn" text="File Path" prefWidth="600" />
+                <TableColumn fx:id="statusColumn" text="Is Monitoring Running?" prefWidth="400" />
+            </columns>
+        </TableView>
+    </center>
+
+</BorderPane>
