@@ -8,6 +8,8 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -24,11 +26,15 @@ public class MonitorRestClient {
 	}
 
 	public String startMonitoring(String path) {
-		return getText(BASE + "/startMonitoring?path=" + path);
+		// URL encode the path to handle spaces and special characters
+		String encodedPath = URLEncoder.encode(path, StandardCharsets.UTF_8);
+		return getText(BASE + "/startMonitoring?path=" + encodedPath);
 	}
 
 	public String stopMonitoring(String path) {
-		return getText(BASE + "/stopMonitoring?path=" + path);
+		// URL encode the path to handle spaces and special characters
+		String encodedPath = URLEncoder.encode(path, StandardCharsets.UTF_8);
+		return getText(BASE + "/stopMonitoring?path=" + encodedPath);
 	}
 
 	public Map<String, Boolean> getMonitoringStatuses() {
@@ -63,7 +69,9 @@ public class MonitorRestClient {
 
 	public boolean getFileMonitoringStatus(String path) {
 		try {
-			URL url = new URL(BASE + "/getFileMonitoringStatus?path=" + path);
+			// URL encode the path to handle spaces and special characters
+			String encodedPath = URLEncoder.encode(path, StandardCharsets.UTF_8);
+			URL url = new URL(BASE + "/getFileMonitoringStatus?path=" + encodedPath);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 

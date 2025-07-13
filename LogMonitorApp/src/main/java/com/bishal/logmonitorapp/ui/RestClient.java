@@ -43,7 +43,8 @@ public class RestClient {
 	}
 
 	public List<LogEntry> filterByPath(String path) {
-		return getList(BASE + "/filterByPath?path=" + path);
+		String encodedPath = URLEncoder.encode(path, StandardCharsets.UTF_8);
+		return getList(BASE + "/filterByPath?path=" + encodedPath);
 	}
 
 	public List<LogEntry> filterByLevel(String level) {
