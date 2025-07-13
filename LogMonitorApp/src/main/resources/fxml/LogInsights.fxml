@@ -12,4 +12,7 @@
             <Accordion fx:id="accordion" style="-fx-padding: 20;" />
         </ScrollPane>
     </center>
+    <bottom>
+        <fx:include source="FooterPane.fxml"/>
+    </bottom>
 </BorderPane>

@@ -13,4 +13,6 @@
         <Button text="Start Writing" onAction="#startSyntheticWriting"/>
     </HBox>
     <Label fx:id="writerStatusLabel" text="Status: not started yet."/>
+    <fx:include source="FooterPane.fxml" />
+
 </VBox>

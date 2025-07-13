@@ -14,4 +14,5 @@
         <Button text="Evaluate" onAction="#evaluateAlerts"/>
     </HBox>
     <Label fx:id="alertStatusLabel" text="No evaluation yet."/>
+    <fx:include source="FooterPane.fxml" />
 </VBox>

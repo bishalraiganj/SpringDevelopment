@@ -34,5 +34,6 @@
             <TableColumn fx:id="fileColumn" text="File"/>
         </columns>
     </TableView>
+    <fx:include source="FooterPane.fxml" />
 
 </VBox>

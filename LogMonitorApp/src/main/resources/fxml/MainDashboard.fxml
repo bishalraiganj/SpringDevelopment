@@ -16,6 +16,7 @@
             <Button text="📊 Real-Time Stats" onAction="#openStats" prefWidth="160"/>
             <Button text="🧵 Thread Status" onAction="#openThreadStatus" prefWidth="160"/>
             <Button text="📈 Log Insights" onAction="#openLogInsights" prefWidth="160"/>
+            <Button text="ℹ️ About" onAction="#openAboutPage" prefWidth="160"/>
         </VBox>
     </left>
 

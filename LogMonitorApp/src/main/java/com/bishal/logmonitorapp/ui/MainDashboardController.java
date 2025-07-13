@@ -61,4 +61,9 @@ public class MainDashboardController {
 	public void openLogInsights() {
 		loadFXML("LogInsights.fxml");
 	}
+
+	@FXML
+	private void openAboutPage() {
+		loadFXML("About.fxml");
+	}
 }

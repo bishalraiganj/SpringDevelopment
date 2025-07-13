@@ -19,4 +19,6 @@
             <TableColumn fx:id="statusColumn" text="Running?"/>
         </columns>
     </TableView>
+    <fx:include source="FooterPane.fxml" />
+
 </VBox>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.bishal.logmonitorapp.ui.AboutController"
+      spacing="14"
+      style="-fx-padding: 20;"
+      alignment="CENTER">
+
+    <Label text="About LogMonitorApp"
+           style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+
+    <Label text="Developer: Bishal Adhikary"/>
+    <Label text="Company: AdhikaryX Systems Pvt. Ltd."/>
+    <Label text="Version: 1.0.0"/>
+    <Label text="Contact: bishaladhikary6297@gmail.com | +916297609615"/>
+    <Label text="Website: https://www.linkedin.com/in/bishaladhikary111/"/>
+
+    <fx:include source="FooterPane.fxml"/>
+</VBox>

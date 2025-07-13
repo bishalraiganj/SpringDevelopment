@@ -37,4 +37,7 @@
     <center>
         <TableView fx:id="logTable" prefHeight="600"/>
     </center>
+    <bottom>
+        <fx:include source="FooterPane.fxml"/>
+    </bottom>
 </BorderPane>

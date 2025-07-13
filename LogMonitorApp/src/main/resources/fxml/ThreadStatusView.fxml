@@ -16,4 +16,7 @@
         </TableView>
     </center>
 
+    <bottom>
+        <fx:include source="FooterPane.fxml"/>
+    </bottom>
 </BorderPane>
