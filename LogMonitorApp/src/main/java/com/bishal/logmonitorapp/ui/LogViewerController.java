@@ -24,6 +24,7 @@ public class LogViewerController {
 	@FXML
 	public void initialize() {
 		TableColumn<LogEntry, String> timestampCol = new TableColumn<>("Timestamp");
+		timestampCol.setPrefWidth(180);
 		timestampCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().timestamp().toString()));
 
 		TableColumn<LogEntry, String> levelCol = new TableColumn<>("Level");
@@ -33,6 +34,7 @@ public class LogViewerController {
 		sourceCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().source()));
 
 		TableColumn<LogEntry, String> messageCol = new TableColumn<>("Message");
+		messageCol.setPrefWidth(230);
 		messageCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().message()));
 
 		TableColumn<LogEntry, String> filePathCol = new TableColumn<>("File Path");

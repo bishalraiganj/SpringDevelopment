@@ -21,11 +21,11 @@
 
     <TableView fx:id="recentTable" prefHeight="400">
         <columns>
-            <TableColumn fx:id="timeColumn" text="Timestamp"/>
+            <TableColumn fx:id="timeColumn" text="Timestamp" prefWidth="180"/>
             <TableColumn fx:id="levelColumn" text="Level"/>
             <TableColumn fx:id="sourceColumn" text="Source"/>
-            <TableColumn fx:id="messageColumn" text="Message"/>
-            <TableColumn fx:id="fileColumn" text="File" prefWidth="500"/>
+            <TableColumn fx:id="messageColumn" text="Message" prefWidth="230"/>
+            <TableColumn fx:id="fileColumn" text="File" prefWidth="1000"/>
         </columns>
     </TableView>
     <fx:include source="FooterPane.fxml" />

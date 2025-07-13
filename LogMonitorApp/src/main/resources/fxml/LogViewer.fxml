@@ -37,10 +37,10 @@
     <center>
         <TableView fx:id="logTable" prefHeight="600">
             <columns>
-                <TableColumn fx:id="timeColumn" text="Timestamp"/>
+                <TableColumn fx:id="timeColumn" text="Timestamp" prefWidth="180"/>
                 <TableColumn fx:id="levelColumn" text="Level"/>
                 <TableColumn fx:id="sourceColumn" text="Source"/>
-                <TableColumn fx:id="messageColumn" text="Message"/>
+                <TableColumn fx:id="messageColumn" text="Message" prefWidth="200"/>
                 <TableColumn fx:id="fileColumn" text="File" prefWidth="500"/>
             </columns>
         </TableView>
