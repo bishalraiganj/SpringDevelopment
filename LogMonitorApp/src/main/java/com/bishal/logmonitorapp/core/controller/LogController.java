@@ -15,6 +15,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -236,7 +237,15 @@ public class LogController {
 	@GetMapping("/getRecent")
 	public List<LogEntry> getRecent(@RequestParam String timeUnit)
 	{
-		Duration duration = Duration.ofSeconds(Long.parseLong(timeUnit));
+		Duration duration;
+		if(timeUnit==null || timeUnit.isEmpty())
+		{
+			System.out.println(" \n Invalid Value Passed ! getRecent() in LogController ! \n");
+			return Collections.emptyList();
+		}
+
+			 duration = Duration.ofSeconds(Long.parseLong(timeUnit));
+
 
 
 	return	logStore.getRecent(duration);
