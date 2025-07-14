@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.*;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -111,8 +112,14 @@ public class LogController {
 	@GetMapping("/startMonitoring")
 	public String startMonitoring(@RequestParam String path)
 	{
+
 		Path filePath = Path.of(path);
 
+		if(!Files.exists(filePath))
+		{
+			System.out.println(" startMonitoring() invoked with invalid path ! = " + path );
+			return "Monitoring failed , path does not exist";
+		}
 		ConcurrentLogMonitor monitor = logMonitorInitializer.getMonitor();
 		monitor.startMonitoring(filePath);
 
