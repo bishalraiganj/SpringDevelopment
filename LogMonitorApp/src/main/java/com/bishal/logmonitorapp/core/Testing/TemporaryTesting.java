@@ -49,7 +49,7 @@ public class TemporaryTesting {
 			bw.flush();
 			count++;
 
-			Thread.sleep(1100);
+			Thread.sleep(1100); // This will make the thread running this method sleep for 1.1 seconds after each write to file
 
 		}
 

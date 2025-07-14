@@ -31,7 +31,8 @@ public class LogMonitorInitializer {
 		LogConsumer addToMemoryConsumer = (logEntry)->{
 			logStore.add(logEntry);
 		};
-		monitor = new ConcurrentLogMonitor(60,2,addToMemoryConsumer);
+		//SleepTime/ poll time  is set to zero , for the following concurrentLogMonitor object ,so that it can immediately monitor changes
+		monitor = new ConcurrentLogMonitor(60,0,addToMemoryConsumer);
 
 		temporaryTestingLogWriter = new TemporaryTesting();
 
