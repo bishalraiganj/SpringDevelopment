@@ -1,34 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.5.3</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
+
     <groupId>com.bishal</groupId>
     <artifactId>LogMonitorApp</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>LogMonitorApp</name>
     <description>LogMonitorApp</description>
-    <url/>
-    <licenses>
-        <license/>
-    </licenses>
-    <developers>
-        <developer/>
-    </developers>
-    <scm>
-        <connection/>
-        <developerConnection/>
-        <tag/>
-        <url/>
-    </scm>
+
     <properties>
         <java.version>17</java.version>
+        <javafx.version>17.0.15</javafx.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -38,7 +31,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -58,26 +50,22 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>24.0.1</version>
-            <classifier>win</classifier>
+            <version>${javafx.version}</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-base</artifactId>
-            <version>24.0.1</version>
-            <classifier>win</classifier>
+            <version>${javafx.version}</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-graphics</artifactId>
-            <version>24.0.1</version>
-            <classifier>win</classifier>
+            <version>${javafx.version}</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>24.0.1</version>
-            <classifier>win</classifier>
+            <version>${javafx.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
@@ -85,9 +73,9 @@
         </dependency>
     </dependencies>
 
-
     <build>
         <plugins>
+            <!-- Spring Boot -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -95,7 +83,63 @@
                     <mainClass>com.bishal.logmonitorapp.LogMonitorAppApplication</mainClass>
                 </configuration>
             </plugin>
+
+            <!-- Launch4j -->
+            <plugin>
+                <groupId>com.akathist.maven.plugins.launch4j</groupId>
+                <artifactId>launch4j-maven-plugin</artifactId>
+                <version>2.5.0</version>
+                <executions>
+                    <execution>
+                        <id>l4j-clui</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>launch4j</goal>
+                        </goals>
+                        <configuration>
+                            <headerType>console</headerType>
+                            <jar>${project.build.directory}/${project.artifactId}-${project.version}.jar</jar>
+                            <outfile>${project.build.directory}/LogMonitorApp.exe</outfile>
+                            <downloadUrl>https://java.com/download</downloadUrl>
+                            <classPath>
+                                <mainClass>com.bishal.logmonitorapp.FxApp</mainClass>
+                            </classPath>
+                            <jre>
+                                <path>jdk</path> <!-- ✅ Use JDK copied to project folder -->
+                                <minVersion>17.0.0</minVersion>
+                                <maxVersion>17.9.9</maxVersion>
+                                <requires64Bit>false</requires64Bit>
+                                <requiresJdk>false</requiresJdk>
+                                <opts>
+                                    <opt>--module-path</opt>
+                                    <opt>${project.basedir}/javafx/javafx-sdk-${javafx.version}/lib</opt>
+                                    <opt>--add-modules</opt>
+                                    <opt>javafx.controls,javafx.fxml,javafx.base,javafx.graphics</opt>
+                                    <opt>--add-opens</opt>
+                                    <opt>java.base/java.lang=ALL-UNNAMED</opt>
+                                </opts>
+                            </jre>
+                            <versionInfo>
+                                <fileVersion>1.0.0.0</fileVersion>
+                                <txtFileVersion>${project.version}</txtFileVersion>
+                                <fileDescription>LogMonitor Dashboard</fileDescription>
+                                <copyright>2025</copyright>
+                                <productVersion>1.0.0.0</productVersion>
+                                <txtProductVersion>${project.version}</txtProductVersion>
+                                <productName>LogMonitorApp</productName>
+                                <companyName>Bishal Adhikary</companyName>
+                                <internalName>LogMonitorApp</internalName>
+                                <originalFilename>LogMonitorApp.exe</originalFilename>
+                            </versionInfo>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
+    <organization>
+        <name>Bishal Adhikary</name>
+    </organization>
+    <inceptionYear>2025</inceptionYear>
 </project>

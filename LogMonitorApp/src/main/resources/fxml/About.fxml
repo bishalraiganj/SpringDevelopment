@@ -5,18 +5,19 @@
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.bishal.logmonitorapp.ui.AboutController"
-      spacing="14"
-      style="-fx-padding: 20;"
-      alignment="CENTER">
+      fx:id="aboutContainer"
+      spacing="12"
+      alignment="CENTER"
+      styleClass="about-pane"
+      stylesheets="/styles/about.css">
 
-    <Label text="About LogMonitorApp"
-           style="-fx-font-size: 20px; -fx-font-weight: bold;" />
-
-    <Label text="Developer: Bishal Adhikary"/>
-    <Label text="Company: AdhikaryX Systems Pvt. Ltd."/>
-    <Label text="Version: 1.0.0"/>
-    <Label text="Contact: bishaladhikary6297@gmail.com | +916297609615"/>
-    <Label text="Website: https://www.linkedin.com/in/bishaladhikary111/"/>
+    <!-- All labels now have fx:id + styleClass -->
+    <Label fx:id="titleLabel" text="About LogMonitorApp" styleClass="about-title"/>
+    <Label fx:id="devLabel" text="Developer: Bishal Adhikary" styleClass="about-text"/>
+    <Label fx:id="companyLabel" text="Company: AdhikaryX Systems Pvt. Ltd." styleClass="about-text"/>
+    <Label fx:id="versionLabel" text="Version: 1.0.0" styleClass="about-text"/>
+    <Label fx:id="contactLabel" text="Contact: bishaladhikary6297@gmail.com | +91 6297609615" styleClass="about-text"/>
+    <Label fx:id="websiteLabel" text="Website: https://www.linkedin.com/in/bishaladhikary111/" styleClass="about-link"/>
 
     <fx:include source="FooterPane.fxml"/>
 </VBox>

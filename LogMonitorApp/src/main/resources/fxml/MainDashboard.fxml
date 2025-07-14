@@ -1,26 +1,123 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.Insets?>
 
-<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.bishal.logmonitorapp.ui.MainDashboardController">
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.bishal.logmonitorapp.ui.MainDashboardController"
+            stylesheets="/styles/dashboard.css">
 
     <left>
-        <VBox spacing="12" style="-fx-padding: 20;">
-            <Button text="📄 Log Viewer" onAction="#openLogViewer" prefWidth="160"/>
-            <Button text="🧩 Monitor Control" onAction="#openMonitorControl" prefWidth="160"/>
-            <Button text="🚨 Alerts" onAction="#openAlerts" prefWidth="160"/>
-            <Button text="🧪 Synthetic Writer" onAction="#openSyntheticWriter" prefWidth="160"/>
-            <Button text="🧹 Clear Memory" onAction="#openSystemActions" prefWidth="160"/>
-            <Button text="📊 Real-Time Stats" onAction="#openStats" prefWidth="160"/>
-            <Button text="🧵 Thread Status" onAction="#openThreadStatus" prefWidth="160"/>
-            <Button text="📈 Log Insights" onAction="#openLogInsights" prefWidth="160"/>
-            <Button text="ℹ️ About" onAction="#openAboutPage" prefWidth="160"/>
-        </VBox>
+        <ScrollPane fitToWidth="true" style="-fx-padding: 20;">
+            <content>
+                <VBox spacing="12" prefWidth="240">
+                    <Button fx:id="btnLogViewer" onAction="#openLogViewer" prefWidth="220">
+                        <graphic>
+                            <ImageView fitWidth="28" fitHeight="28">
+                                <image>
+                                    <Image url="/icons/log_viewer.png" />
+                                </image>
+                            </ImageView>
+                        </graphic>
+                        <text>Log Viewer</text>
+                    </Button>
+
+                    <Button fx:id="btnMonitorControl" onAction="#openMonitorControl" prefWidth="220">
+                        <graphic>
+                            <ImageView fitWidth="28" fitHeight="28">
+                                <image>
+                                    <Image url="/icons/monitor_control.png" />
+                                </image>
+                            </ImageView>
+                        </graphic>
+                        <text>Monitor Control</text>
+                    </Button>
+
+                    <Button fx:id="btnAlerts" onAction="#openAlerts" prefWidth="220">
+                        <graphic>
+                            <ImageView fitWidth="28" fitHeight="28">
+                                <image>
+                                    <Image url="/icons/alerts.png" />
+                                </image>
+                            </ImageView>
+                        </graphic>
+                        <text>Alerts</text>
+                    </Button>
+
+                    <Button fx:id="btnSyntheticWriter" onAction="#openSyntheticWriter" prefWidth="220">
+                        <graphic>
+                            <ImageView fitWidth="28" fitHeight="28">
+                                <image>
+                                    <Image url="/icons/synthetic_writer.png" />
+                                </image>
+                            </ImageView>
+                        </graphic>
+                        <text>Synthetic Writer</text>
+                    </Button>
+
+                    <Button fx:id="btnClearMemory" onAction="#openSystemActions" prefWidth="220">
+                        <graphic>
+                            <ImageView fitWidth="28" fitHeight="28">
+                                <image>
+                                    <Image url="/icons/clear_memory.png" />
+                                </image>
+                            </ImageView>
+                        </graphic>
+                        <text>Clear Memory</text>
+                    </Button>
+
+                    <Button fx:id="btnStats" onAction="#openStats" prefWidth="220">
+                        <graphic>
+                            <ImageView fitWidth="28" fitHeight="28">
+                                <image>
+                                    <Image url="/icons/stats.png" />
+                                </image>
+                            </ImageView>
+                        </graphic>
+                        <text>Real-Time Stats</text>
+                    </Button>
+
+                    <Button fx:id="btnThreadStatus" onAction="#openThreadStatus" prefWidth="220">
+                        <graphic>
+                            <ImageView fitWidth="28" fitHeight="28">
+                                <image>
+                                    <Image url="/icons/thread_status.png" />
+                                </image>
+                            </ImageView>
+                        </graphic>
+                        <text>Thread Status</text>
+                    </Button>
+
+                    <Button fx:id="btnLogInsights" onAction="#openLogInsights" prefWidth="220">
+                        <graphic>
+                            <ImageView fitWidth="28" fitHeight="28">
+                                <image>
+                                    <Image url="/icons/log_insights.png" />
+                                </image>
+                            </ImageView>
+                        </graphic>
+                        <text>Log Insights</text>
+                    </Button>
+
+                    <Button fx:id="btnAbout" onAction="#openAboutPage" prefWidth="220">
+                        <graphic>
+                            <ImageView fitWidth="28" fitHeight="28">
+                                <image>
+                                    <Image url="/icons/about.png" />
+                                </image>
+                            </ImageView>
+                        </graphic>
+                        <text>About</text>
+                    </Button>
+                </VBox>
+            </content>
+        </ScrollPane>
     </left>
 
     <center>
-        <StackPane fx:id="contentPane" style="-fx-padding: 20;"/>
+        <StackPane fx:id="contentPane" style="-fx-padding: 20;" />
     </center>
 </BorderPane>
