@@ -46,6 +46,8 @@ public class Authenticator {
 		{
 			Pattern usernamePattern = Pattern.compile("([a-zA-Z0-9]{1,20})");
 
+			//[restOfChars]*[AtleastOneCharsUniqueSet1]+[restOfChars]*[restOfChars]*[AtleastOneCharUniqueSet2]+[restOfChar]*|reverseOrder
+			//Without using lookarounds
 			Pattern passwordPattern = Pattern.compile("([a-zA-Z!@#$%^&*()])*([0-9])+([a-zA-Z!@#$%^&*()])*([a-zA-Z0-9])*([!@#$%^&*()])+([a-zA-Z0-9])*|([a-zA-Z0-9])*([!@#$%^&*()])+([a-zA-Z0-9])*([a-zA-Z!@#$%^&*()])*([0-9])+([a-zA-Z!@#$%^&*()])*");
 
 
@@ -60,6 +62,15 @@ public class Authenticator {
 		}
 
 		return false;
+	}
+
+
+	public static String retrievePassword(String username)
+	{
+
+
+
+		return "";
 	}
 
 
