@@ -2,12 +2,15 @@ package com.bishal.receipeappbackend.core.controller;
 
 
 import com.bishal.receipeappbackend.core.authenticator.ParallelAuthenticator;
+import com.bishal.receipeappbackend.core.dbhandler.DbHandler;
+import com.bishal.receipeappbackend.core.model.AuthRequestDTO;
+import com.bishal.receipeappbackend.core.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Future;
 
 @RestController
 @RequestMapping("/api/fetch")
@@ -23,12 +26,17 @@ public class Controller {
 	}
 
 
-	@GetMapping("/authenticate")
-	public CompletableFuture<Boolean> authenticateApi(String username,String password)
+	@PostMapping("/authenticate")
+	public CompletableFuture<Boolean> authenticateApi(@RequestBody AuthRequestDTO request)
 	{
-		CompletableFuture<>
+		return authenticator.authenticate(request.getUsername(),request.getPassword());
+	}
 
+	@PostMapping("/getUserInfo")
+	public Optional<User> getUserInfo(@RequestBody AuthRequestDTO request)
+	{
 
-		return authenticator.authenticate().com
+		return DbHandler.runQuery(request.getUsername(),request.getPassword(),DbHandler.fetchUserFunction);
+
 	}
 }

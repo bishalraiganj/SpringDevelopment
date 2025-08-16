@@ -16,7 +16,7 @@ public class DbHandler {
 
 //	public static void main(String... args)
 //	{
-//		System.out.println(retrieveUserData("bishaladhikary","iamadeveloper").get());
+////		System.out.println(retrieveUserData("bishaladhikary","iamadeveloper").get());
 //
 //		System.out.println("-".repeat(50));
 //
@@ -134,9 +134,6 @@ public class DbHandler {
 			throw new RuntimeException(e);
 		}
 
-
-
-
 	}
 
 
@@ -155,7 +152,7 @@ public class DbHandler {
 						System.getenv("MYSQL_PASS"));
 					 Statement statement = connection.createStatement())
 				{
-					JOptionPane.showMessageDialog(null,"Connection Successful to "+connection);
+//					JOptionPane.showMessageDialog(null,"Connection Successful to "+connection);
 					return Optional.of(biFunctionDbActions.apply(connection,statement));
 				}
 			}catch(SQLException e)
