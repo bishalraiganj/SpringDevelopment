@@ -1,5 +1,9 @@
 package com.bishal.receipeappbackend.core.authenticator;
 
+import com.bishal.receipeappbackend.core.dbhandler.DbHandler;
+import com.bishal.receipeappbackend.core.model.User;
+
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -9,15 +13,20 @@ public class Authenticator {
 	public static void main(String... args)
 	{
 
-		String username = "bishal";
-		String password = "3%";
-		System.out.println("Authentication of username: "+username+" and password: "+ password +"\n"  + authenticate(username,password));
+//		String username = "bishal";
+//		String password = "sdx3^^5555&";
+//		System.out.println("Authentication of username: "+username+" and password: "+ password +"\n"  + authenticate(username,password));
+//
+//
+//		Pattern passwordPattern = Pattern.compile("([a-zA-Z!@#$%^&*()])*([0-9])+([a-zA-Z!@#$%^&*()])*([a-zA-Z0-9])*([!@#$%^&*()])+([a-zA-Z0-9])*|([a-zA-Z0-9])*([!@#$%^&*()])+([a-zA-Z0-9])*([a-zA-Z!@#$%^&*()])*([0-9])+([a-zA-Z!@#$%^&*()])*");
+//		Matcher m = passwordPattern.matcher(password);
+//
+//		System.out.println("Password Matches: " + m.matches());
 
 
-		Pattern passwordPattern = Pattern.compile("([a-zA-Z!@#$%^&*()])*([0-9])+([a-zA-Z!@#$%^&*()])*([a-zA-Z0-9])*([!@#$%^&*()])+([a-zA-Z0-9])*|([a-zA-Z0-9])*([!@#$%^&*()])+([a-zA-Z0-9])*([a-zA-Z!@#$%^&*()])*([0-9])+([a-zA-Z!@#$%^&*()])*");
-		Matcher m = passwordPattern.matcher(password);
+		System.out.println(authenticate("bishaladhikary","bishal@12"));
+		System.out.println(authenticate("akshaykumar","iama"));
 
-		System.out.println("Password Matches: " + m.matches());
 	}
 
 	public static boolean authenticate(String username, String password)
@@ -26,14 +35,14 @@ public class Authenticator {
 
 		if(checkCredentialFormat(username, password))
 		{
-			return true;
+			Optional<User> user = retrieveUserCreds(username,password);
+			if(user.isPresent())
+			{
+				return true;
+			}
 		}
 
 		return false;
-
-
-
-
 	}
 
 
@@ -65,12 +74,13 @@ public class Authenticator {
 	}
 
 
-	public static String retrievePassword(String username)
+	public static Optional<User> retrieveUserCreds(String username,String password)
 	{
 
+		Optional<User> user = DbHandler.runQuery(username,password,DbHandler.fetchUserFunction);
+		return user;
 
 
-		return "";
 	}
 
 

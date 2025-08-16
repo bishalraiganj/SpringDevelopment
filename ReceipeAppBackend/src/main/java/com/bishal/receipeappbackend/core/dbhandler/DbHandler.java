@@ -14,21 +14,21 @@ import java.util.function.Function;
 public class DbHandler {
 
 
-	public static void main(String... args)
-	{
-		System.out.println(retrieveUserData("bishaladhikary","iamadeveloper").get());
+//	public static void main(String... args)
+//	{
+//		System.out.println(retrieveUserData("bishaladhikary","iamadeveloper").get());
+//
+//		System.out.println("-".repeat(50));
+//
+//		System.out.println(runQuery("akshaykumar","iamanactor",fetchUserFunction).get());
+//
+//
+//
+//
+//	}
 
-		System.out.println("-".repeat(50));
 
-		System.out.println(runQuery("akshaykumar","iamanactor",fetchUserFunction).get());
-
-
-
-
-	}
-
-
-	static BiFunction<Connection,String,Optional<User>> fetchUserFunction = (connection,up)->{
+	public static BiFunction<Connection,String,Optional<User>> fetchUserFunction = (connection,up)->{
 
 		final String sqlQuery = "SELECT * FROM userbase WHERE username = ? AND password = ?";
 
@@ -57,7 +57,7 @@ public class DbHandler {
 		}
 	};
 
-	static BiFunction<Connection,String,Optional<String>> infoFunct = (connection,up)->{
+	public static BiFunction<Connection,String,Optional<String>> infoFunct = (connection,up)->{
 
 		final String sqlQuery = "SELECT * FROM userbase WHERE username = ? AND password = ?";
 
