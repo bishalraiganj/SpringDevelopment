@@ -18,12 +18,7 @@ public class ParallelRegistrator {
 		CompletableFuture<Boolean> cf = CompletableFuture.supplyAsync(()->{
 		return	new RegisterTask(regRequest,dbExecutor).compute();
 		},fjp);
-		try {
-			Thread.sleep(5000);
-		}catch(InterruptedException e)
-		{
-			e.printStackTrace();
-		}
+
 		return cf;
 	}
 
@@ -32,6 +27,12 @@ public class ParallelRegistrator {
 //		ParallelRegistrator pr = new ParallelRegistrator();
 //
 //		RegRequestDTO rr = new RegRequestDTO("Donrt","don@123","Don Legend","don@gmail.com");
+//	try {
+//		Thread.sleep(5000);
+//	}catch(InterruptedException e)
+//	{
+//		e.printStackTrace();
+//	}
 //		System.out.println(pr.registerUser(rr));
 //
 //
@@ -105,6 +106,15 @@ class Compensator implements ForkJoinPool.ManagedBlocker{
 	@Override
 	public boolean block()
 	{
+		try {
+			Thread.sleep(100); // when control comes here ,
+			// it means db task is not done yet ,so make the thread sleep for 100 ms
+			// ,this way cpu will not be stressed run this thread and other threads can run that needs to run
+			// , since this thread's db task is not done yet and 2sec is not elapsed either
+		}catch(InterruptedException e)
+		{
+			e.printStackTrace();
+		}
 		return false;
 
 	}
