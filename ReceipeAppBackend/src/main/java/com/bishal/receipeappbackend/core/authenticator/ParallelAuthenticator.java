@@ -72,7 +72,7 @@ public class ParallelAuthenticator {
 		public boolean block() throws InterruptedException {
 
 
-				Thread.sleep(100);
+				Thread.sleep(5);
 
 
 			return false;
