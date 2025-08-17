@@ -2,15 +2,13 @@ package com.bishal.receipeappbackend.core.model;
 
 public class RegRequestDTO {
 
-	private int uid;
-	private String username;
-	private String password;
-	private String name;
-	private String email;
+	private final String username;
+	private final String password;
+	private final String name;
+	private final String email;
 
-	public RegRequestDTO(int uid,String username,String password,String name,String email)
+	public RegRequestDTO(String username,String password,String name,String email)
 	{
-		this.uid=uid;
 		this.username=username;
 		this.password=password;
 		this.name=name;
@@ -18,10 +16,7 @@ public class RegRequestDTO {
 	}
 
 
-	public int getUid()
-	{
-		return uid;
-	}
+
 	public String getUsername()
 	{
 		return username;
