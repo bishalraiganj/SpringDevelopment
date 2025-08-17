@@ -66,15 +66,17 @@ class RegisterTask extends RecursiveTask<Boolean> {
 			},dbExecutor);
 			try {
 				ForkJoinPool.managedBlock(new Compensator(cf, startTime));
-				if(cf.isDone())
-				{
-					return true;
-				}
-				else
-				{
-					System.out.println("RegRequest Failed for : username( %s ) password( %s ) ".formatted(username,password));
+			//6 seconds passed or cf(db task) is done only then control comes here,
+				if(!cf.isDone()) {
+					cf.cancel(true);
 					return false;
 				}
+				return cf.getNow(false);
+//				if(cf.get()==)
+//				{
+//					System.out.println("RegRequest Failed for : username( %s ) password( %s ) ".formatted(username,password));
+//					return false;
+//				}
 
 			}catch(InterruptedException e)
 			{
@@ -107,7 +109,7 @@ class Compensator implements ForkJoinPool.ManagedBlocker{
 	public boolean block()
 	{
 		try {
-			Thread.sleep(100); // when control comes here ,
+			Thread.sleep(200); // when control comes here ,
 			// it means db task is not done yet ,so make the thread sleep for 100 ms
 			// ,this way cpu will not be stressed run this thread and other threads can run that needs to run
 			// , since this thread's db task is not done yet and 2sec is not elapsed either
@@ -123,7 +125,7 @@ class Compensator implements ForkJoinPool.ManagedBlocker{
 	public boolean isReleasable()
 	{
 		long elapsedTime = System.currentTimeMillis() - startTime;
-		return cf.isDone() || elapsedTime > 2000;
+		return cf.isDone() || elapsedTime > 6000;
 
 	}
 

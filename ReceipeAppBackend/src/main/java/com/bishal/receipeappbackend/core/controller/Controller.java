@@ -7,6 +7,7 @@ import com.bishal.receipeappbackend.core.dbhandler.DbHandler;
 import com.bishal.receipeappbackend.core.model.AuthRequestDTO;
 import com.bishal.receipeappbackend.core.model.RegRequestDTO;
 import com.bishal.receipeappbackend.core.model.User;
+import com.bishal.receipeappbackend.core.userhandler.UserInfoRetrieverConcurrent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,13 +21,15 @@ public class Controller {
 
 	private final ParallelAuthenticator authenticator;
 	private final ParallelRegistrator pr;
+	private final UserInfoRetrieverConcurrent ur;
 
 
 	@Autowired
-	public Controller(ParallelAuthenticator pa,ParallelRegistrator pr)
+	public Controller(ParallelAuthenticator pa,ParallelRegistrator pr,UserInfoRetrieverConcurrent ur)
 	{
 		this.authenticator=pa;
 		this.pr=pr;
+		this.ur=ur;
 	}
 
 
@@ -37,10 +40,10 @@ public class Controller {
 	}
 
 	@PostMapping("/getUserInfo")
-	public Optional<User> getUserInfo(@RequestBody AuthRequestDTO request)
+	public CompletableFuture<User> getUserInfo(@RequestBody AuthRequestDTO request)
 	{
 
-		return DbHandler.runQuery(request.getUsername(),request.getPassword(),DbHandler.fetchUserFunction);
+		return ur.getUserInfo(request.getUsername(),request.getPassword());
 
 	}
 
