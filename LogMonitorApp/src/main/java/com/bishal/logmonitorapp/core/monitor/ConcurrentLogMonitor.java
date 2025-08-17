@@ -51,7 +51,7 @@ class ProperBlockingTask extends RecursiveTask<ConcurrentHashMap<LogEntry, Time>
 	private final ConcurrentHashMap<String, LocalDateTime> processedFailedLogsMap = new ConcurrentHashMap<>();
 
 	private final AtomicLong logTotalCount = new AtomicLong(0L);
-// I have disbled the timeLimit for the threads run time in compute() in the while condition , currently threads will keep running as long as the runningStatus map has true values for the path this task object has to monitor,
+// I have disabled the timeLimit for the threads run time in compute() in the while condition , currently threads will keep running as long as the runningStatus map has true values for the path this task object has to monitor,
 	ProperBlockingTask(int timeLimit,ConcurrentHashMap<Path,Long> fileOffsets, Path path ,Long sleepTime, ConcurrentHashMap<Path, AtomicBoolean> runningFlags ,LogConsumer consumer,ConcurrentHashMap<Thread,AtomicBoolean> runningThreadsStatusMap )
 	{
 		this.timeLimit = timeLimit;
