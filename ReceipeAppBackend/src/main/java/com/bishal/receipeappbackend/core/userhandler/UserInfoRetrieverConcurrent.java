@@ -2,6 +2,7 @@ package com.bishal.receipeappbackend.core.userhandler;
 
 import com.bishal.receipeappbackend.core.dbhandler.DbHandler;
 import com.bishal.receipeappbackend.core.model.User;
+import com.bishal.receipeappbackend.core.model.UserSession;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CompletableFuture;
@@ -13,10 +14,10 @@ public class UserInfoRetrieverConcurrent {
 
 	private ExecutorService dbExecutor = Executors.newFixedThreadPool(50);
 
-	public CompletableFuture<User>  getUserInfo(String username,String password)
+	public CompletableFuture<UserSession>  getUserInfo(String username, String password)
 	{
-		CompletableFuture<User> cf = CompletableFuture.supplyAsync(()->{
-		return	DbHandler.runQuery(username,password,DbHandler.fetchUserFunction).get();
+		CompletableFuture<UserSession> cf = CompletableFuture.supplyAsync(()->{
+		return	DbHandler.userSessionQuery(username,password,DbHandler.fetchUserSessionBiFunct).get();
 		},dbExecutor);
 
 		return cf;

@@ -2,6 +2,7 @@ package com.bishal.receipeappbackend.core.dbhandler;
 
 import com.bishal.receipeappbackend.core.authenticator.Authenticator;
 import com.bishal.receipeappbackend.core.model.User;
+import com.bishal.receipeappbackend.core.model.UserSession;
 
 import javax.swing.*;
 import java.sql.*;
@@ -28,6 +29,53 @@ public class DbHandler {
 		System.out.println(registerUser("Jasika","j1234!","Jasika Barman","jasika@gmail.com",registerUserFunction));
 
 	}
+
+
+	public static BiFunction<Connection,String,Optional<UserSession>> fetchUserSessionBiFunct = (conn,up)->{
+		final String sqlQuery = "SELECT * FROM userbase WHERE username=? AND password=?";
+		final String username= up.split(",")[0].trim();
+		final String password = up.split(",")[1].trim();
+
+		if(Authenticator.authenticate(username,password))
+		{
+			try {
+				PreparedStatement ps = conn.prepareStatement(sqlQuery);
+				ps.setString(1,username);
+				ps.setString(2,password);
+				ResultSet rs = ps.executeQuery();
+				if(rs.next()) {
+					return Optional.of(new UserSession(rs.getString(2), rs.getString(4), rs.getString(5)));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}else
+		{
+			System.out.println(" No Such user for (%s,%s) (fetchUserSessionFunct/BiFunction invoked ! ".formatted(username,password));
+			return Optional.empty();
+		}
+		return Optional.empty();
+	};
+
+
+	public static Optional<UserSession> userSessionQuery(String username,String password,BiFunction<Connection,String,Optional<UserSession>> biFunct)
+	{
+		final String up = username.trim()+","+password.trim();
+		try{
+			try(Connection conn = DbHandler.getConnection("bishal12345").get())
+			{
+			return	biFunct.apply(conn,up);
+			}
+
+		}catch(SQLException e)
+		{
+			e.printStackTrace();
+			System.out.println("userSessionQuery() in DbHandler failed for some BiFunction Username:%s , Password:%s".formatted(username,password));
+			return Optional.empty();
+		}
+
+	}
+
 
 
 

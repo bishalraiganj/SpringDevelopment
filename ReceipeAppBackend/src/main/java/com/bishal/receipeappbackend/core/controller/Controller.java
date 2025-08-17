@@ -7,6 +7,7 @@ import com.bishal.receipeappbackend.core.dbhandler.DbHandler;
 import com.bishal.receipeappbackend.core.model.AuthRequestDTO;
 import com.bishal.receipeappbackend.core.model.RegRequestDTO;
 import com.bishal.receipeappbackend.core.model.User;
+import com.bishal.receipeappbackend.core.model.UserSession;
 import com.bishal.receipeappbackend.core.userhandler.UserInfoRetrieverConcurrent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -39,8 +40,8 @@ public class Controller {
 		return authenticator.authenticate(request.getUsername(),request.getPassword());
 	}
 
-	@PostMapping("/getUserInfo")
-	public CompletableFuture<User> getUserInfo(@RequestBody AuthRequestDTO request)
+	@PostMapping("/getUserSession")
+	public CompletableFuture<UserSession> getUserSession(@RequestBody AuthRequestDTO request)
 	{
 
 		return ur.getUserInfo(request.getUsername(),request.getPassword());
