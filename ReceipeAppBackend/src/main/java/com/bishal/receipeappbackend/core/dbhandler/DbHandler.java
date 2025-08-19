@@ -1,11 +1,15 @@
 package com.bishal.receipeappbackend.core.dbhandler;
 
 import com.bishal.receipeappbackend.core.authenticator.Authenticator;
+import com.bishal.receipeappbackend.core.model.Recipe;
 import com.bishal.receipeappbackend.core.model.User;
 import com.bishal.receipeappbackend.core.model.UserSession;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.swing.*;
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
@@ -28,7 +32,48 @@ public class DbHandler {
 
 		System.out.println(registerUser("Jasika","j1234!","Jasika Barman","jasika@gmail.com",registerUserFunction));
 
+		System.out.println("-".repeat(50));
+
+		System.out.println(fetchRecipe("Fried Rice",DbHandler.fetchRecipeBiFunct).get());
+
 	}
+
+	public static BiFunction<Connection,String,Optional<Recipe>> fetchRecipeBiFunct = (conn,title)-> {
+
+		if (title != null) {
+			final String sqlQuery = "SELECT * FROM recipes WHERE title=?";
+
+			try {
+				try (PreparedStatement ps = conn.prepareStatement(sqlQuery)) {
+					ps.setString(1, title);
+					ResultSet rs = ps.executeQuery();
+					if(rs.next())
+					{
+						ObjectMapper mapper = new ObjectMapper();
+						String title1 = rs.getString(2);
+						String description = rs.getString(3);
+						String ingredientsJsonString = rs.getString(4);
+						String instructionsJsonString = rs.getString(5);
+
+						// We have to pass the blueprint of the object to properly create the object this json string represents
+						String[] ingredients = mapper.readValue(ingredientsJsonString, String[].class);
+							String[] instructions = mapper.readValue(instructionsJsonString,String[].class);
+							return Optional.of(new Recipe(title1,description,ingredients,instructions));
+					}
+					else{
+						System.out.println(title+"Not Found in Db : fetchRecipeBiFunct failed to fetch"+ LocalDateTime.now());
+						return Optional.empty();
+					}
+				}
+			} catch (SQLException  | JsonProcessingException e) {
+				e.printStackTrace();
+			}
+
+		}
+		return Optional.empty();
+
+	};
+
 
 
 	public static BiFunction<Connection,String,Optional<UserSession>> fetchUserSessionBiFunct = (conn,up)->{
@@ -58,6 +103,24 @@ public class DbHandler {
 	};
 
 
+
+	public static Optional<Recipe> fetchRecipe(String title,BiFunction<Connection,String,Optional<Recipe>> biFunct)
+	{
+		if(title != null) {
+			try {
+				//IF getConnection() fails or returns empty Optional program can crash because no safety logic is present in that case
+				try (Connection conn = getConnection("bishal12345").get()) {
+					return biFunct.apply(conn, title);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+			return Optional.empty();
+
+
+	}
 	public static Optional<UserSession> userSessionQuery(String username,String password,BiFunction<Connection,String,Optional<UserSession>> biFunct)
 	{
 		final String up = username.trim()+","+password.trim();

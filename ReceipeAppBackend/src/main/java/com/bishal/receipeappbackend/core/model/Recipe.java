@@ -1,11 +1,17 @@
 package com.bishal.receipeappbackend.core.model;
 
-public record Recipe(String title,int uid,String description,String[] ingredients,String[] instructions) {
+import java.util.Arrays;
+
+public record Recipe(String title, String description, String[] ingredients, String[] instructions) {
 
 
-	public Recipe(String title,String description,String[] ingredients,String[] instructions)
+
+	@Override
+	public String toString()
 	{
-		this(title,0,description,ingredients,instructions);
+
+
+		return "[title= %s | description= %s | ingredients= %s | instructions= %s]".formatted(title,description, Arrays.toString(ingredients),Arrays.toString(instructions));
 	}
 
 

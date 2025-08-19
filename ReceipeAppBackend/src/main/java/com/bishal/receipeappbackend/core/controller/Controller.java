@@ -2,6 +2,7 @@ package com.bishal.receipeappbackend.core.controller;
 
 
 import com.bishal.receipeappbackend.core.authenticator.ParallelAuthenticator;
+import com.bishal.receipeappbackend.core.authenticator.ParallelRecipeFetcher;
 import com.bishal.receipeappbackend.core.authenticator.ParallelRegistrator;
 import com.bishal.receipeappbackend.core.dbhandler.DbHandler;
 import com.bishal.receipeappbackend.core.model.AuthRequestDTO;
@@ -23,15 +24,18 @@ public class Controller {
 	private final ParallelAuthenticator authenticator;
 	private final ParallelRegistrator pr;
 	private final UserInfoRetrieverConcurrent ur;
-
+	private final ParallelRecipeFetcher prf;
 
 	@Autowired
-	public Controller(ParallelAuthenticator pa,ParallelRegistrator pr,UserInfoRetrieverConcurrent ur)
+	public Controller(ParallelAuthenticator pa,ParallelRegistrator pr,ParallelRecipeFetcher prf,UserInfoRetrieverConcurrent ur)
 	{
+
 		this.authenticator=pa;
 		this.pr=pr;
+		this.prf=prf;
 		this.ur=ur;
 	}
+
 
 
 	@PostMapping("/authenticate")
