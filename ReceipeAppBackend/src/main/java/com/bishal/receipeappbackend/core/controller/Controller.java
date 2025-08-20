@@ -5,10 +5,7 @@ import com.bishal.receipeappbackend.core.authenticator.ParallelAuthenticator;
 import com.bishal.receipeappbackend.core.authenticator.ParallelRecipeFetcher;
 import com.bishal.receipeappbackend.core.authenticator.ParallelRegistrator;
 import com.bishal.receipeappbackend.core.dbhandler.DbHandler;
-import com.bishal.receipeappbackend.core.model.AuthRequestDTO;
-import com.bishal.receipeappbackend.core.model.RegRequestDTO;
-import com.bishal.receipeappbackend.core.model.User;
-import com.bishal.receipeappbackend.core.model.UserSession;
+import com.bishal.receipeappbackend.core.model.*;
 import com.bishal.receipeappbackend.core.userhandler.UserInfoRetrieverConcurrent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -57,4 +54,13 @@ public class Controller {
 	{
 		return  pr.registerUser(regRequest);
 	}
+
+
+	@PostMapping("/fetchRecipe")
+	public CompletableFuture<Recipe> fetchRecipe(@RequestBody RecipeRequestDTO recipeRequest)
+	{
+		return prf.parallelRecipeFetcher(recipeRequest.title());
+	}
+
+
 }
